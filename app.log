@@ -1,0 +1,7 @@
+2025-03-18 08:55:35,028 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-18 08:55:35,029 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-18 08:55:42,995 - INFO - Página atual: 1, Itens por página: 50
+2025-03-18 08:55:43,120 - INFO - 127.0.0.1 - - [18/Mar/2025 08:55:43] "GET / HTTP/1.1" 200 -
+2025-03-18 08:55:43,288 - INFO - 127.0.0.1 - - [18/Mar/2025 08:55:43] "GET /static/js/charts.js HTTP/1.1" 200 -
+2025-03-18 08:55:43,298 - INFO - 127.0.0.1 - - [18/Mar/2025 08:55:43] "GET /static/css/styles.css HTTP/1.1" 200 -

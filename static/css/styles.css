@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.card-title {
+    font-size: 0.95rem;
+    font-weight: bold;
+}
+.card-body p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.list-group-item {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+}
+.monthly-totals-container {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #fff;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.status-badge {
+    font-size: 0.9em;
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.status-badge.liberado {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-badge.pendente {
+    background-color: #ffc107;
+    color: black;
+}

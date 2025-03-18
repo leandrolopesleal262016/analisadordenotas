@@ -1,0 +1,43 @@
+2024-08-17 19:23:33,627 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-08-17 19:23:33,627 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-17 19:23:33,627 - INFO -  * Restarting with stat
+2024-08-17 19:23:34,168 - WARNING -  * Debugger is active!
+2024-08-17 19:23:34,168 - INFO -  * Debugger PIN: 136-140-657
+2024-08-17 19:54:46,764 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-08-17 19:54:46,764 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-17 19:54:46,766 - INFO -  * Restarting with stat
+2024-08-17 19:54:47,316 - WARNING -  * Debugger is active!
+2024-08-17 19:54:47,317 - INFO -  * Debugger PIN: 136-140-657
+2024-08-17 19:55:10,626 - INFO - 127.0.0.1 - - [17/Aug/2024 19:55:10] "GET / HTTP/1.1" 200 -
+2024-08-17 19:55:11,282 - INFO - 127.0.0.1 - - [17/Aug/2024 19:55:11] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-08-17 19:55:46,166 - INFO - DataFrames concatenados com sucesso.
+2024-08-17 19:55:46,224 - INFO - Colunas 'Valor NF' e 'Créditos' convertidas com sucesso.
+2024-08-17 19:55:46,247 - INFO - Dados agrupados com sucesso.
+2024-08-17 19:55:46,252 - INFO - Percentuais e rankings calculados com sucesso.
+2024-08-17 19:55:46,253 - INFO - Valores formatados com sucesso.
+2024-08-17 19:55:46,257 - INFO - Ranking criado com sucesso.
+2024-08-17 19:55:46,263 - INFO - 127.0.0.1 - - [17/Aug/2024 19:55:46] "POST / HTTP/1.1" 200 -
+2024-08-17 19:58:35,749 - INFO -  * Detected change in 'C:\\Users\\leand\\OneDrive\\Área de Trabalho\\Projeto Programa com IA\\App Web\\app.py', reloading
+2024-08-17 19:58:35,838 - INFO -  * Restarting with stat
+2024-08-17 19:58:36,459 - WARNING -  * Debugger is active!
+2024-08-17 19:58:36,461 - INFO -  * Debugger PIN: 136-140-657
+2024-08-17 20:02:27,783 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-08-17 20:02:27,783 - INFO - [33mPress CTRL+C to quit[0m
+2024-08-17 20:02:27,784 - INFO -  * Restarting with stat
+2024-08-17 20:02:28,310 - WARNING -  * Debugger is active!
+2024-08-17 20:02:28,312 - INFO -  * Debugger PIN: 136-140-657
+2024-08-17 20:02:38,330 - INFO - 127.0.0.1 - - [17/Aug/2024 20:02:38] "GET / HTTP/1.1" 200 -
+2024-08-17 20:02:38,357 - INFO - 127.0.0.1 - - [17/Aug/2024 20:02:38] "[33mGET /static/css/styles.css HTTP/1.1[0m" 404 -
+2024-08-17 20:02:38,416 - INFO - 127.0.0.1 - - [17/Aug/2024 20:02:38] "GET /static/js/charts.js HTTP/1.1" 200 -
+2024-08-17 20:02:57,207 - INFO - DataFrames concatenados com sucesso.
+2024-08-17 20:02:57,256 - INFO - Colunas 'Valor NF' e 'Créditos' convertidas com sucesso.
+2024-08-17 20:02:57,265 - INFO - Dados agrupados com sucesso.
+2024-08-17 20:02:57,266 - INFO - Percentuais e rankings calculados com sucesso.
+2024-08-17 20:02:57,268 - INFO - Valores formatados com sucesso.
+2024-08-17 20:02:57,270 - INFO - Ranking criado com sucesso.
+2024-08-17 20:02:57,283 - INFO - 127.0.0.1 - - [17/Aug/2024 20:02:57] "POST / HTTP/1.1" 200 -
+2024-08-17 20:02:57,327 - INFO - 127.0.0.1 - - [17/Aug/2024 20:02:57] "[33mGET /static/css/styles.css HTTP/1.1[0m" 404 -
+2024-08-17 20:02:57,353 - INFO - 127.0.0.1 - - [17/Aug/2024 20:02:57] "[36mGET /static/js/charts.js HTTP/1.1[0m" 304 -

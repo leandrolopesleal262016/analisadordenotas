@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisador de Dados</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bg-primary text-white text-center py-3">
+        <h1>Relatório analítico Nota Fiscal Paulista</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-3">
+        <p>&copy; 2024 Analisador de Dados. Todos os direitos reservados.</p>
+        <p>Desenvolvido por Leandro Leal</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chart.js Data Labels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+</body>
+</html>
