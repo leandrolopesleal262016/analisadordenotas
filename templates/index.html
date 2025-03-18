@@ -11,77 +11,179 @@
     </div>
     {% endif %}
 
-    <!-- Formulário de Pesquisa -->
-    <form method="GET" action="/">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Pesquisar por nome ou CNPJ" name="search" value="{{ search_query }}">
-            <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
+    <!-- Campo de Pesquisa Unificado -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Pesquisa</h5>
+            <form method="GET" action="/">
+                <div class="mb-3">
+                    <label for="unifiedSearch" class="form-label">Pesquisar por nome ou CNPJ (separe múltiplos valores por vírgula):</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="unifiedSearch" name="search" 
+                               placeholder="Ex: Empresa ABC, 12345678901234, Empresa XYZ" 
+                               value="{{ search_query }}">
+                        <button class="btn btn-primary" type="submit">Pesquisar</button>
+                    </div>
+                    <div class="form-text text-muted mt-1">
+                        Você pode pesquisar por nome parcial, CNPJ completo ou múltiplos valores separados por vírgula.
+                    </div>
+                </div>
+            </form>
+            
+            {% if search_results %}
+            <div class="mt-4">
+                <h6>Resultado da Pesquisa:</h6>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>CNPJ</th>
+                                <th>Emitente</th>
+                                <th>Total Créditos</th>
+                                <th>Qtd. Notas</th>
+                                <th>Cadastro por Robô</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in search_results %}
+                            <tr>
+                                <td>{{ result['CNPJ emit.'] }}</td>
+                                <td>{{ result['Emitente'] }}</td>
+                                <td class="text-right">R$ {{ result['Total Créditos']|format_currency }}</td>
+                                <td class="text-center">{{ result['No.'] }}</td>
+                                <td class="text-center">
+                                    {% if result['É Robô'] %}
+                                    <span class="badge bg-info">Sim</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary">Não</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% if total_creditos_pesquisa %}
+                            <tr class="table-info">
+                                <td colspan="2"><strong>Total Geral</strong></td>
+                                <td class="text-right"><strong>R$ {{ total_creditos_pesquisa|format_currency }}</strong></td>
+                                <td class="text-center"><strong>{{ total_notas_pesquisa }}</strong></td>
+                                <td></td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
         </div>
-    </form>
-    <!-- Consulta por múltiplos CNPJs -->
+    </div>
+
+    <!-- Formulário para carregar arquivos/pastas -->
 <div class="card mb-4">
     <div class="card-body">
-        <h5 class="card-title">Consulta por CNPJs</h5>
-        <form method="POST" action="{{ url_for('consulta_cnpj') }}" class="mb-3">
-            <div class="form-group">
-                <label for="cnpjList">Digite os CNPJs (um por linha):</label>
-                <textarea class="form-control mb-2" id="cnpjList" name="cnpjList" rows="4" 
-                          placeholder="Digite os CNPJs, um por linha"></textarea>
+        <h5 class="card-title">Seleção de Arquivos ou Pastas para Análise</h5>
+        <form method="POST" enctype="multipart/form-data" action="/" id="fileUploadForm">
+            <div class="mb-3">
+                <label for="csvFiles" class="form-label">Selecione arquivos CSV ou arraste pastas completas:</label>
+                <div class="drop-zone mb-3" id="dropZone">
+                    <div class="drop-zone-prompt">
+                        <i class="bi bi-cloud-arrow-up-fill fs-1"></i>
+                        <p>Arraste arquivos ou pastas aqui ou clique para selecionar</p>
+                    </div>
+                    <input type="file" name="csvFiles" id="csvFiles" class="drop-zone-input" webkitdirectory directory multiple accept=".csv">
+                </div>
+                <div id="fileList" class="list-group mt-3" style="max-height: 200px; overflow-y: auto; display: none;">
+                    <!-- Arquivos selecionados serão listados aqui -->
+                </div>
+                <div id="duplicateWarning" class="alert alert-warning mt-3" style="display: none;">
+                    <i class="bi bi-exclamation-triangle-fill"></i> 
+                    Foram encontrados arquivos duplicados! Eles serão processados apenas uma vez.
+                    <button type="button" class="btn-close float-end" aria-label="Close" onclick="document.getElementById('duplicateWarning').style.display='none';"></button>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Consultar</button>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <button type="submit" class="btn btn-primary" id="analyzeButton">
+                        <i class="bi bi-graph-up"></i> Analisar Arquivos
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary mx-2" id="clearButton">
+                        <i class="bi bi-x-circle"></i> Limpar Seleção
+                    </button>
+                </div>
+                <div class="form-check align-self-center">
+                    <input class="form-check-input" type="checkbox" id="recursiveCheck" name="recursive" checked>
+                    <label class="form-check-label" for="recursiveCheck">
+                        Incluir subpastas
+                    </label>
+                </div>
+            </div>
         </form>
-        
-        {% if cnpj_results %}
-        <div class="mt-4">
-            <h6>Resultado da Consulta:</h6>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>CNPJ</th>
-                            <th>Emitente</th>
-                            <th>Total Créditos</th>
-                            <th>Qtd. Notas</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for result in cnpj_results %}
-                        <tr>
-                            <td>{{ result.cnpj }}</td>
-                            <td>{{ result.emitente }}</td>
-                            <td class="text-right">R$ {{ result.total_creditos|format_currency }}</td>
-                            <td class="text-center">{{ result.qtd_notas }}</td>
-                        </tr>
-                        {% endfor %}
-                        <tr class="table-info">
-                            <td colspan="2"><strong>Total Geral</strong></td>
-                            <td class="text-right"><strong>R$ {{ total_creditos_cnpjs|format_currency }}</strong></td>
-                            <td class="text-center"><strong>{{ total_notas_cnpjs }}</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        {% endif %}
     </div>
 </div>
 
-    <!-- Formulário com botões -->
-    <div class="d-flex justify-content-between">
-        <!-- Botão para carregar arquivos -->
-        <form method="POST" enctype="multipart/form-data" action="/">
-            <div class="mb-3">
-                <label for="csvFiles" class="form-label">Selecione os arquivos CSV:</label>
-                <input type="file" name="csvFiles" id="csvFiles" class="form-control" multiple required accept=".csv">
-            </div>
-            <button type="submit" class="btn btn-primary">Analisar Arquivos</button>
-        </form>
+<!-- Botão para encerrar a aplicação -->
+<div class="d-flex justify-content-end mb-4">
+    <form method="POST" action="{{ url_for('shutdown') }}">
+        <button type="submit" class="btn btn-danger">
+            <i class="bi bi-power"></i> Encerrar Aplicação
+        </button>
+    </form>
+</div>
 
-        <!-- Botão para encerrar a aplicação -->
-        <form method="POST" action="{{ url_for('shutdown') }}">
-            <button type="submit" class="btn btn-danger align-self-end">Encerrar Aplicação</button>
-        </form>
+<!-- Adicionar esta seção após o formulário de upload na página index.html -->
+
+{% if monthly_totals|length > 0 %}
+<div class="card mt-4 mb-4">
+    <div class="card-body">
+        <h5 class="card-title">
+            <i class="bi bi-info-circle-fill text-primary"></i> Informações do Processamento
+        </h5>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="px-3 py-2 me-3 bg-success text-white rounded">
+                        <i class="bi bi-file-earmark-check"></i>
+                    </div>
+                    <div>
+                        <span class="d-block fs-4 fw-bold">{{ processed_files|default('N/A') }}</span>
+                        <span class="text-muted small">Arquivos Processados</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="px-3 py-2 me-3 bg-info text-white rounded">
+                        <i class="bi bi-cash-stack"></i>
+                    </div>
+                    <div>
+                        <span class="d-block fs-4 fw-bold">R$ {{ total_creditos|default(0)|format_currency }}</span>
+                        <span class="text-muted small">Total de Créditos</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="px-3 py-2 me-3 bg-primary text-white rounded">
+                        <i class="bi bi-receipt"></i>
+                    </div>
+                    <div>
+                        <span class="d-block fs-4 fw-bold">{{ total_notas|default(0) }}</span>
+                        <span class="text-muted small">Notas Fiscais</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-light border mt-3">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-lightbulb-fill text-warning me-2 fs-4"></i>
+                <div>
+                    <strong>Dica:</strong> Use o campo de pesquisa unificada acima para filtrar os resultados por nome de empresa ou CNPJ.
+                    Você pode pesquisar múltiplos valores separando-os por vírgula.
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+{% endif %}
 
     <!-- Cards de Totais Mensais -->
     {% if monthly_totals %}
@@ -97,6 +199,22 @@
                                 <span class="h4">R$ {{ total|format_currency }}</span>
                                 <br>
                                 <small class="text-muted">Total de Créditos</small>
+                                {% if monthly_robotic_totals and month in monthly_robotic_totals %}
+                                <br>
+                                <span class="badge bg-info mt-2">
+                                    R$ {{ monthly_robotic_totals[month]|format_currency }}
+                                    <br>
+                                    <small>Créditos por Robô</small>
+                                </span>
+                                <br>
+                                <small class="text-muted">
+                                    {% if total > 0 %}
+                                    ({{ ((monthly_robotic_totals[month] / total) * 100)|round(1) }}% do total)
+                                    {% else %}
+                                    (0% do total)
+                                    {% endif %}
+                                </small>
+                                {% endif %}
                             </p>
                         </div>
                     </div>
@@ -106,7 +224,6 @@
         </div>
     </div>
     {% endif %}
-
     {% if ranking and ranking|length > 0 %}
     <div class="row mt-4">
         <div class="col-md-12">
@@ -125,6 +242,9 @@
                                     <span class="badge {% if rank['Situação'] == 'Liberado' %}bg-success{% else %}bg-warning{% endif %}">
                                         {{ rank['Situação'] }}
                                     </span>
+                                    {% if rank['É Robô'] %}
+                                    <span class="badge bg-info ms-1">Cadastro por Robô</span>
+                                    {% endif %}
                                 </div>
                                 <div class="text-right">
                                     <div class="font-weight-bold">Total Créditos: R$ {{ rank['Total Créditos']|format_currency }}</div>
@@ -154,6 +274,9 @@
                         <span class="badge {% if item['Situação'] == 'Liberado' %}bg-success{% else %}bg-warning{% endif %} p-2">
                             {{ item['Situação'] }}
                         </span>
+                        {% if item['É Robô'] %}
+                        <span class="badge bg-info p-2 ms-1">Cadastro por Robô</span>
+                        {% endif %}
                     </div>
                     
                     <canvas id="barChart{{ loop.index }}" style="height:150px;"></canvas>
